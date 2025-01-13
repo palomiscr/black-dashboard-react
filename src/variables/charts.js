@@ -1,4 +1,4 @@
-/*!
+/*
 
 =========================================================
 * Black Dashboard React v1.2.2
@@ -34,6 +34,22 @@ let chart1_2_options = {
     mode: "nearest",
     intersect: 0,
     position: "nearest",
+    callbacks: {
+      // Customize the tooltip label
+      label: function(tooltipItem, data) {
+        let label = data.datasets[tooltipItem.datasetIndex].label || '';
+        let value = tooltipItem.yLabel;
+
+        // Add unit based on dataset label
+        if (label === 'Accuracy') {
+          return `${label}: ${value}%`;  // Add percentage for accuracy
+        } else if (label === 'Time Spent') {
+          return `${label}: ${value} sec`;  // Add seconds for time spent
+        } else {
+          return `${label}: ${value}`;  // Default for other datasets
+        }
+      }
+    }
   },
   responsive: true,
   scales: {
@@ -70,143 +86,56 @@ let chart1_2_options = {
 // // // used inside src/views/Dashboard.js
 // #########################################
 let chartExample1 = {
-  data1: (canvas) => {
-    let ctx = canvas.getContext("2d");
-
-    let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke.addColorStop(1, "rgba(29,140,248,0.2)");
-    gradientStroke.addColorStop(0.4, "rgba(29,140,248,0.0)");
-    gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
-
-    return {
-      labels: [
-        "JAN",
-        "FEB",
-        "MAR",
-        "APR",
-        "MAY",
-        "JUN",
-        "JUL",
-        "AUG",
-        "SEP",
-        "OCT",
-        "NOV",
-        "DEC",
-      ],
-      datasets: [
-        {
-          label: "My First dataset",
-          fill: true,
-          backgroundColor: gradientStroke,
-          borderColor: "#1f8ef1",
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          pointBackgroundColor: "#1f8ef1",
-          pointBorderColor: "rgba(255,255,255,0)",
-          pointHoverBackgroundColor: "#1f8ef1",
-          pointBorderWidth: 20,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 15,
-          pointRadius: 4,
-          data: [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100],
-        },
-      ],
-    };
+  performance: {
+    data: (canvas) => {
+      return {
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+        datasets: [
+          {
+            label: "Performance",
+            borderColor: "#1f8ef1",
+            backgroundColor: "rgba(29,140,248,0.2)",
+            data: [70, 77, 75, 85, 80], // User performance data
+          },
+        ],
+      };
+    },
+    options: chart1_2_options,
   },
-  data2: (canvas) => {
-    let ctx = canvas.getContext("2d");
-
-    let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke.addColorStop(1, "rgba(29,140,248,0.2)");
-    gradientStroke.addColorStop(0.4, "rgba(29,140,248,0.0)");
-    gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
-
-    return {
-      labels: [
-        "JAN",
-        "FEB",
-        "MAR",
-        "APR",
-        "MAY",
-        "JUN",
-        "JUL",
-        "AUG",
-        "SEP",
-        "OCT",
-        "NOV",
-        "DEC",
-      ],
-      datasets: [
-        {
-          label: "My First dataset",
-          fill: true,
-          backgroundColor: gradientStroke,
-          borderColor: "#1f8ef1",
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          pointBackgroundColor: "#1f8ef1",
-          pointBorderColor: "rgba(255,255,255,0)",
-          pointHoverBackgroundColor: "#1f8ef1",
-          pointBorderWidth: 20,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 15,
-          pointRadius: 4,
-          data: [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120],
-        },
-      ],
-    };
+  accuracy: {
+    data: (canvas) => {
+      return {
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+        datasets: [
+          {
+            label: "Accuracy",
+            borderColor: "#d048b6",
+            backgroundColor: "rgba(233,32,99,0.2)",
+            data: [80, 88, 85, 95, 90], // Accuracy per implant placement
+          },
+        ],
+      };
+    },
+    options: chart1_2_options,
   },
-  data3: (canvas) => {
-    let ctx = canvas.getContext("2d");
-
-    let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke.addColorStop(1, "rgba(29,140,248,0.2)");
-    gradientStroke.addColorStop(0.4, "rgba(29,140,248,0.0)");
-    gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
-
-    return {
-      labels: [
-        "JAN",
-        "FEB",
-        "MAR",
-        "APR",
-        "MAY",
-        "JUN",
-        "JUL",
-        "AUG",
-        "SEP",
-        "OCT",
-        "NOV",
-        "DEC",
-      ],
-      datasets: [
-        {
-          label: "My First dataset",
-          fill: true,
-          backgroundColor: gradientStroke,
-          borderColor: "#1f8ef1",
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          pointBackgroundColor: "#1f8ef1",
-          pointBorderColor: "rgba(255,255,255,0)",
-          pointHoverBackgroundColor: "#1f8ef1",
-          pointBorderWidth: 20,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 15,
-          pointRadius: 4,
-          data: [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130],
-        },
-      ],
-    };
-  },
-  options: chart1_2_options,
+  time_spent: {
+    data: (canvas) => {
+      return {
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+        datasets: [
+          {
+            label: "Time Spent",
+            borderColor: "#d048b6",
+            backgroundColor: "rgba(233,32,99,0.2)",
+            data: [55, 40, 60, 100, 80], 
+          },
+        ],
+      };
+    },
+    options: chart1_2_options,
+  }
 };
+
 
 // #########################################
 // // // used inside src/views/Dashboard.js
